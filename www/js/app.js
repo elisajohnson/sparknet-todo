@@ -30,8 +30,6 @@ angular.module('todo', ['ionic'])
 
 .controller('TodoCtrl', function($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate) {
 
-  // A utility function for creating a new project
-  // with the given projectTitle
   var createProject = function(projectTitle) {
     var newProject = Projects.newProject(projectTitle);
     $scope.projects.push(newProject);
@@ -40,7 +38,7 @@ angular.module('todo', ['ionic'])
   }
 
 
-  // Load or initialize projects
+  // Load projects
   $scope.projects = Projects.all();
 
   // Grab the last active, or the first project
