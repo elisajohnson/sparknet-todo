@@ -1,7 +1,7 @@
 Todo App 
 =====================
 
-A mobile simple todo list app that lets your earn points as you complete more tasks. Built with Ionic
+A mobile todo list app that lets your earn points as you complete more tasks. Built with Ionic
 
 ## Using this project
 
