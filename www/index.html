@@ -40,6 +40,12 @@
                 ng-click="remove(task)"></a>
             </ion-item>
           </ion-list>
+          <!-- If less than 2 tasks have been completed -->
+          <ion-item ng-show="!!!tasks.length">
+            <p class="welcome-title">Welcome to your Todo List.</p>
+
+            <p class="welcome-msg">Want some motivation? Earn points for every task you complete!</p>
+          </ion-item>
         </ion-content>
 
       <!-- New task modal -->
@@ -77,9 +83,14 @@
       </ion-header-bar>
       // Score modal content
       <ion-content>
-        <ion-item>
+        <ion-item ng-show="count >= 2">
           Congratulations on completing {{count}} tasks!
         </ion-item>
+
+        <ion-item ng-show="count <= 2" ng-hide="count >= 2">
+          Check off a few tasks on your todo list and start earning points!
+        </ion-item>
+
       </ion-content>
     </script>
 

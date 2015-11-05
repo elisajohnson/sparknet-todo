@@ -1,4 +1,10 @@
 /* CSS */
+p {
+  text-align: center;
+}
+.welcome-title {
+  font-weight: bold;
+}
 .task-btn {
   float: right;
 }
