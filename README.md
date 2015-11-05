@@ -9,4 +9,6 @@ A project for SparkNET Tech: A todo list built in Ionic
 $ npm install -g ionic
 ```
 
+http://localhost:8100/
+
 
