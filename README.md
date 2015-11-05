@@ -1,7 +1,8 @@
 Todo App 
 =====================
 
-A project for SparkNET Tech: A todo list built in Ionic
+A mobile simple todo list app that lets your earn points as you complete more tasks.
+######Built with Ionic
 
 ## Using this project
 
