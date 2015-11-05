@@ -6,6 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -16,10 +17,8 @@
   </head>
 
   <body ng-app="todo" ng-controller="TodoCtrl">
-    <ion-side-menus>
 
-      <!-- Content -->
-      <ion-side-menu-content>
+      <!-- Header -->
         <ion-header-bar class="bar-calm">
           <h1 class="title">Todo</h1>
           <!-- New Task button-->
@@ -35,13 +34,13 @@
 
           <!-- List and list items -->
           <ion-list>
-            <ion-item ng-repeat="task in tasks">
-              <span class="task">{{task.title}}</span>
-              <a class="button button-icon icon ion-checkmark-round" ng-click="remove(task)"></a>
+            <ion-item ng-repeat="task in tasks" id="task">
+              {{task.title}}
+                <a class="button button-icon icon ion-checkmark-round task-btn"
+                ng-click="remove(task)"></a>
             </ion-item>
           </ion-list>
         </ion-content>
-      </ion-side-menu-content>
 
       <!-- New task modal -->
       <script id="new-task.html" type="text/ng-template">
@@ -57,11 +56,11 @@
           <form ng-submit="createTask(task)">
             <div class="list">
               <label class="item item-input">
-                <input type="text" placeholder="What do you need to do?" ng-model="task.title">
+                <input type="text" placeholder="Add a task to your todo list" ng-model="task.title">
               </label>
             </div>
             <div class="padding">
-              <button type="submit" class="button button-block button-positive">Create Task</button>
+              <button type="submit" class="button button-block button-energized">Create Task</button>
             </div>
           </form>
         </ion-content>
@@ -78,11 +77,12 @@
       </ion-header-bar>
       // Score modal content
       <ion-content>
-      Congratulations on completing {{count}} tasks!
+        <ion-item>
+          Congratulations on completing {{count}} tasks!
+        </ion-item>
       </ion-content>
     </script>
 
-    </ion-side-menus>
   </body>
 
 </html>
