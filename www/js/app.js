@@ -1,110 +1,55 @@
 angular.module('todo', ['ionic'])
 
-.factory('Projects', function() {
-  return {
-    all: function() {
-      var projectString = window.localStorage['projects'];
-      if(projectString) {
-        return angular.fromJson(projectString);
-      }
-      return [];
-    },
-    save: function(projects) {
-      window.localStorage['projects'] = angular.toJson(projects);
-    },
-    newProject: function(projectTitle) {
-      // Add a new project
-      return {
-        title: projectTitle,
-        tasks: []
-      };
-    },
-    getLastActiveIndex: function() {
-      return parseInt(window.localStorage['lastActiveProject']) || 0;
-    },
-    setLastActiveIndex: function(index) {
-      window.localStorage['lastActiveProject'] = index;
-    }
-  }
-})
+.controller('TodoCtrl', function($scope, $ionicModal) {
+  $scope.tasks = [];
 
-.controller('TodoCtrl', function($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate) {
-
-  var createProject = function(projectTitle) {
-    var newProject = Projects.newProject(projectTitle);
-    $scope.projects.push(newProject);
-    Projects.save($scope.projects);
-    $scope.selectProject(newProject, $scope.projects.length-1);
-  }
-
-
-  // Load projects
-  $scope.projects = Projects.all();
-
-  // Grab the last active, or the first project
-  $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
-
-  // Create a new project
-  $scope.newProject = function() {
-    var projectTitle = prompt('Project name');
-    if(projectTitle) {
-      createProject(projectTitle);
-    }
-  };
-
-  // Select the given project
-  $scope.selectProject = function(project, index) {
-    $scope.activeProject = project;
-    Projects.setLastActiveIndex(index);
-    $ionicSideMenuDelegate.toggleLeft(false);
-  };
-
-  // Create the modal
+  // Task Modal
   $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
     $scope.taskModal = modal;
   }, {
-    scope: $scope
+    scope: $scope,
+    animation: 'slide-in-up'
   });
 
+  $ionicModal.fromTemplateUrl('score-modal.html', function(modal) {
+    $scope.scoreModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  // Called when the form is submitted
   $scope.createTask = function(task) {
-    if(!$scope.activeProject || !task) {
-      return;
-    }
-    $scope.activeProject.tasks.push({
-      title: task.title
+    $scope.tasks.push({
+      title: task.title,
+      done:false
     });
     $scope.taskModal.hide();
-
-    // Inefficient, but save all the projects
-    Projects.save($scope.projects);
-
     task.title = "";
   };
 
+  // Open our new task modal
   $scope.newTask = function() {
     $scope.taskModal.show();
   };
 
+  // Close the new task modal
   $scope.closeNewTask = function() {
     $scope.taskModal.hide();
-  }
-
-  $scope.toggleProjects = function() {
-    $ionicSideMenuDelegate.toggleLeft();
   };
 
+  $scope.count = 0;
+  $scope.remove = function(task) {
+    var index = $scope.tasks.indexOf(task);
+    $scope.tasks.splice(index, 1);
+    $scope.count = $scope.count + 1;
+  };
 
-  // Using $timeout so everything is initialized
-  $timeout(function() {
-    if($scope.projects.length == 0) {
-      while(true) {
-        var projectTitle = prompt('Your first project title:');
-        if(projectTitle) {
-          createProject(projectTitle);
-          break;
-        }
-      }
-    }
-  });
+  $scope.seeScore = function(){
+    $scope.scoreModal.show();
+  };
 
+  $scope.closeScore = function(){
+    $scope.scoreModal.hide();
+  };
 });
